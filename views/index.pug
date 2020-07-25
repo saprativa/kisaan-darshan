@@ -1,5 +1,14 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+
+  .jumbotron
+    h1.display-3 Farmer Online
+    p.lead
+      | Welcome to the online mandi.
+    hr.my-4
+    p
+      | You may create your account by clicking the Register button below.
+    p.lead
+      a.btn.btn-primary.btn-lg(href='/users/farmer/register', role='button') Register
+  

@@ -1,0 +1,56 @@
+extends layout
+
+block head
+  link(href='/stylesheets/login.css', rel='stylesheet')
+
+block content
+  form.form-signin(action="/users/farmer/register", method="post")
+
+    if errors
+      for error in errors
+        .alert.alert-dismissible.alert-danger
+          button.close(type='button', data-dismiss='alert') ×
+          strong= error.msg
+
+    if exists
+      .alert.alert-dismissible.alert-danger
+        button.close(type='button', data-dismiss='alert') ×
+        strong Farmer account already exists.
+      
+    h1.h3.mb-3.font-weight-normal Please register
+    
+    label.sr-only(for='firstName') First name
+    input#firstName.form-control(name='firstname', type='text', placeholder='First name', autofocus='')
+    
+    label.sr-only(for='lastName') Last name
+    input#lastName.form-control(name='lastname', type='text', placeholder='Last name')
+
+    label.sr-only(for='age') Age
+    input#age.form-control(name='age', type='text', placeholder='Age')
+
+    label.sr-only(for='sex') Sex
+    input#sex.form-control(name='sex', type='text', placeholder='Sex')
+
+    label.sr-only(for='mobileNumber') Mobile number
+    input#mobileNumber.form-control(name='mobile', type='text', placeholder='Mobile number')
+
+    label.sr-only(for='email') Email
+    input#email.form-control(name='email', type='text', placeholder='Email (optional)')
+
+    label.sr-only(for='village') Village
+    input#village.form-control(name='village', type='text', placeholder='Village')
+
+    label.sr-only(for='block') Block
+    input#block.form-control(name='block', type='text', placeholder='Block')
+
+    label.sr-only(for='district') District
+    input#district.form-control(name='district', type='text', placeholder='District')
+
+    label.sr-only(for='state') State
+    input#state.form-control(name='state', type='text', placeholder='State')
+
+    label.sr-only(for='password') Password
+    input#password.form-control(name='password', type='password', placeholder='Password (minimum 5 characters)')
+    
+    button.btn.btn-lg.btn-primary.btn-block(type='submit') Register
+    
