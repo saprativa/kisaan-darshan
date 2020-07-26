@@ -6,9 +6,9 @@ class Home extends Component {
     return (
       <div>
         <Jumbotron>
-          <h1 className="display-3">Welcome to Kishan Darshan</h1>
+          <h1 className="display-3">Welcome to Kisaan Darshan</h1>
           <p className="lead">
-            Farmers leading the world of agricultural ecosystem through Kisaan Darsan where all 
+            Farmers leading the world of agricultural ecosystem through Kisaan Darshan where all 
             stockholders of agriculture viz. investors, markets, consumers, intellectuals &amp; 
             professionals along with government entities interacts freely center to farmers and 
             farming community.

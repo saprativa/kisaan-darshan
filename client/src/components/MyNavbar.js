@@ -18,7 +18,7 @@ const MyNavbar = (props) => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">Kishan Darshan</NavbarBrand>
+        <NavbarBrand href="/">Kisaan Darshan</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
