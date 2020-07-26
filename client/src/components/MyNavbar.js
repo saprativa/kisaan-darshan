@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -7,7 +8,7 @@ import {
   Nav,
   NavItem,
 } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
+
 
 const MyNavbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);

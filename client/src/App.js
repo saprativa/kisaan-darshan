@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import MyNavbar from './components/MyNavbar';
 import { Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
@@ -10,7 +9,7 @@ import Error from './components/Error';
 function App() {
   return (
     <div className="App">
-      <MyNavbar></MyNavbar>
+      <MyNavbar />
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/login" component={Login} />
