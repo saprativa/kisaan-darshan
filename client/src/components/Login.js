@@ -2,6 +2,7 @@ import React from "react"
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers'
 import * as yup from "yup"
+import axios from 'axios'
 import './Login.css'
 
 const schema = yup.object().shape({
@@ -14,9 +15,10 @@ export default function Login() {
     resolver: yupResolver(schema)
   })
   const onSubmit = data => {
-    fetch('/login')
-    .then(response => response.json())
-    .then(data => console.log(data));
+    axios.post('/login', FormData)
+    .then((response) => {
+      console.log(response.data)
+    })
   }
 
   return (
