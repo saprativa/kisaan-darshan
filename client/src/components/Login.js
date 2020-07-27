@@ -1,24 +1,33 @@
-import React, { Component } from 'react'
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import React from "react"
+import { useForm } from "react-hook-form"
+import { yupResolver } from '@hookform/resolvers'
+import * as yup from "yup"
+import './Login.css'
 
-class Login extends Component {
-    render() {
-      return (
-        <div className="container">
-          <Form>
-            <FormGroup>
-              <Label for="email">Email</Label>
-              <Input type="email" name="email" id="email" placeholder="Email" />
-            </FormGroup>
-            <FormGroup>
-              <Label for="password">Password</Label>
-              <Input type="password" name="password" id="password" placeholder="Password" />
-            </FormGroup>
-            <Button>Submit</Button>
-          </Form>
-        </div>
-      )
-    }
+const schema = yup.object().shape({
+  mobile: yup.string().required("Please enter Mobile Number."),
+  password: yup.string().required("Please enter Password.")
+})
+
+export default function Login() {
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(schema)
+  })
+  const onSubmit = data => {
+    fetch('/login')
+    .then(response => response.json())
+    .then(data => console.log(data));
   }
-  
-  export default Login
+
+  return (
+    <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+      <input type="text" name="mobile" placeholder="Mobile Number" ref={register} />
+      <p className="error">{errors.mobile?.message}</p>
+        
+      <input type="password" name="password" placeholder="Password" ref={register} />
+      <p className="error">{errors.password?.message}</p>
+      
+      <input type="submit" value="Login" />
+    </form>
+  )
+}
