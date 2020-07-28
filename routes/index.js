@@ -10,7 +10,20 @@ router.get('/', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   console.log(req.body)
-  res.json({name: "Som", title: "Bhattacharjee"})
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { 
+      return res.json({success: false}) 
+    }
+    if (!user) { 
+      return res.json({success: false}) 
+    }
+    req.logIn(user, function(err) {
+      if (err) { 
+        return res.json({success: false}) 
+      }
+      return res.json({success: true})
+    })
+  })(req, res, next)
 })
 
 module.exports = router

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers'
 import * as yup from "yup"
@@ -11,18 +11,24 @@ const schema = yup.object().shape({
 })
 
 export default function Login() {
+  const [login, setLogin] = useState(false)
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema)
   })
   const onSubmit = data => {
-    axios.post('/login', FormData)
+    axios.post('/login', data)
     .then((response) => {
       console.log(response.data)
+      if (!response.data.success) {
+        setLogin(true);
+        console.log(login)
+      }
     })
   }
 
   return (
     <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+    
       <input type="text" name="mobile" placeholder="Mobile Number" ref={register} />
       <p className="error">{errors.mobile?.message}</p>
         
