@@ -1,5 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 import { useForm } from "react-hook-form"
+import { useHistory } from "react-router-dom";
 import { yupResolver } from '@hookform/resolvers'
 import * as yup from "yup"
 import axios from 'axios'
@@ -11,24 +12,30 @@ const schema = yup.object().shape({
 })
 
 export default function Login() {
-  const [login, setLogin] = useState(false)
-  const { register, handleSubmit, errors } = useForm({
+
+  const { register, handleSubmit, errors, setError } = useForm({
     resolver: yupResolver(schema)
   })
+
+  const history = useHistory();
+
   const onSubmit = data => {
     axios.post('/login', data)
     .then((response) => {
-      console.log(response.data)
-      if (!response.data.success) {
-        setLogin(true);
-        console.log(login)
+      if (response.data.success) {
+        history.push("/")
+      } else {
+        setError("server", {type: "manual", message: "Invalid Mobile Number/Password."})
       }
     })
   }
 
   return (
+     
     <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-    
+
+      <p className="error">{errors.server?.message}</p>
+      
       <input type="text" name="mobile" placeholder="Mobile Number" ref={register} />
       <p className="error">{errors.mobile?.message}</p>
         
