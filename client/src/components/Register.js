@@ -8,7 +8,16 @@ import './Login.css'
 
 const schema = yup.object().shape({
   firstName: yup.string().required("Please enter First Name."),
-  
+  lastName: yup.string().required("Please enter Last Name."),
+  age: yup.string().required("Please enter Age."),
+  sex: yup.string().required("Please enter Sex."),
+  mobile: yup.string().required("Please enter Mobile Number."),
+  email: yup.string().email("Please enter a valid Email."),
+  village: yup.string().required("Please enter Village."),
+  block: yup.string().required("Please enter Block."),
+  district: yup.string().required("Please enter District."),
+  state: yup.string().required("Please enter State."),
+  password: yup.string().required("Please enter Password.")
 })
 
 export default function Register() {
@@ -22,16 +31,16 @@ export default function Register() {
   const onSubmit = data => {
     axios.post('/register', data)
     .then((response) => {
-      console.log()
-      response.data.errors.forEach(element => {
-        setError(element.param, {type: "server", message: element.msg})
-      });
-      //setError(response.data.errors[0].param, {type: "server", message: response.data.errors[0].msg})
-      if (response.data.success) {
-       // history.push("/login")
-      } else {
-        //setError("server", {type: "manual", message: "Invalid Mobile Number/Password."})
+      if(response.data.errors) {
+        response.data.errors.forEach(element => {
+          setError(element.param, {type: "server", message: element.msg})
+        })
       }
+      if (response.data.success) {
+        history.push("/login")
+      }
+      if(response.data.exists)
+        setError("server", {type: "manual", message: "User already exists!"})
     })
   }
 

@@ -58,11 +58,11 @@ router.post('/register', [
     district: req.body.district,
     state: req.body.state}), req.body.password, function(err) {
       if (err) {
-        console.log('Error while Farmer register!', err);
+        console.log(err);
         return res.send({exists: true});
       }
       console.log('Farmer registered!');
-      return res.send({success: 'Farmer registerd successfully.'});
+      return res.send({success: true});
   });
 });
 
