@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
+import Secret from './components/Secret';
 import Error from './components/Error';
 
 function App() {
@@ -12,8 +13,9 @@ function App() {
       <MyNavbar />
       <Switch>
         <Route path="/" component={Home} exact />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
+        <Route path="/login" component={Login}  exact />
+        <Route path="/register" component={Register} exact />
+        <Route path="/secret" component={Secret} exact />
         <Route component={Error} />
       </Switch>
     </div>

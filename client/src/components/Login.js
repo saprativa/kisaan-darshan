@@ -17,16 +17,17 @@ export default function Login() {
     resolver: yupResolver(schema)
   })
 
-  const history = useHistory();
+  const history = useHistory()
 
   const onSubmit = data => {
     axios.post('/login', data)
     .then((response) => {
       if (response.data.success) {
         history.push("/")
-      } else {
-        setError("server", {type: "manual", message: "Invalid Mobile Number/Password."})
-      }
+      } 
+    })
+    .catch((error) => {
+      setError("server", {type: "manual", message: "Invalid Mobile Number/Password."})
     })
   }
 

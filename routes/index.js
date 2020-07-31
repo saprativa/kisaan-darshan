@@ -9,25 +9,30 @@ router.get('/', function(req, res, next) {
   res.render('index', {title: 'Farmer'})
 })
 
-router.post('/login', function(req, res, next) {
-  console.log(req.body)
-  passport.authenticate('local', function(err, user, info) {
-    if (err) { 
-      return res.json({success: false}) 
-    }
-    if (!user) { 
-      return res.json({success: false}) 
-    }
-    req.logIn(user, function(err) {
-      if (err) { 
-        return res.json({success: false}) 
-      }
-      return res.json({success: true})
-    })
-  })(req, res, next)
+router.get('/check', function(req, res, next) {
+  if(req.user) {
+    return res.send(req.user)
+  } else {
+    return res.send("Not authenticated.")
+  }
+})
+
+router.get('/logout', function(req, res, next) {
+  req.logout()
+  res.redirect('/')
 })
 
 
+// LOGIN
+
+router.post('/login',
+  passport.authenticate('local'),
+  function(req, res) {
+    res.json({success: true})
+  }
+)
+
+//REGISTER
 router.post('/register', [
   body('firstName', 'Please enter a valid first name.').notEmpty().bail().isAlpha().trim().escape(),
   body('lastName', 'Please enter a valid last name.').notEmpty().bail().isAlpha().trim().escape(),
