@@ -29,7 +29,7 @@ export default function Register() {
   const history = useHistory();
 
   const onSubmit = data => {
-    axios.post('/register', data)
+    axios.post('/api/register', data)
     .then((response) => {
       if(response.data.errors) {
         response.data.errors.forEach(element => {

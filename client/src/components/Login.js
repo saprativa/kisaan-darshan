@@ -20,7 +20,7 @@ export default function Login() {
   const history = useHistory()
 
   const onSubmit = data => {
-    axios.post('/login', data)
+    axios.post('/api/login', data)
     .then((response) => {
       if (response.data.success) {
         history.push("/")

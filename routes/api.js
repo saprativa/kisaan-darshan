@@ -1,34 +1,22 @@
 var express = require('express')
 var router = express.Router()
 var passport = require('passport')
+var jwt = require('jsonwebtoken')
 var Farmer = require('../models/farmer')
 const { body, validationResult } = require('express-validator');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', {title: 'Farmer'})
-})
-
-router.get('/check', function(req, res, next) {
-  if(req.user) {
-    return res.send(req.user)
-  } else {
-    return res.send("Not authenticated.")
-  }
-})
-
-router.get('/logout', function(req, res, next) {
-  req.logout()
-  res.redirect('/')
+// Test
+router.get('/test', function(req, res, next) {
+  res.send("Hi there!")
 })
 
 
 // LOGIN
-
 router.post('/login',
-  passport.authenticate('local'),
+  passport.authenticate('local', { session: false }),
   function(req, res) {
-    res.json({success: true})
+    const token = jwt.sign({_id: req.user._id}, 'jai_jawan_jai_kisaan')
+    return res.json({token: token, success: true})
   }
 )
 
