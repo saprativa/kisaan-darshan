@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken')
 var Farmer = require('../models/farmer')
 const { body, validationResult } = require('express-validator');
 
-// Test
+// GET USER DETAILS
 router.get('/auth', passport.authenticate('jwt', { session: false }), function(req, res, next) {
   res.json(req.user)
 })
@@ -20,7 +20,7 @@ router.post('/login',
   }
 )
 
-//REGISTER
+// REGISTER
 router.post('/register', [
   body('firstName', 'Please enter a valid first name.').notEmpty().bail().isAlpha().trim().escape(),
   body('lastName', 'Please enter a valid last name.').notEmpty().bail().isAlpha().trim().escape(),

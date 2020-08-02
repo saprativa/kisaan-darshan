@@ -5,7 +5,6 @@ const logger = require('morgan');
 const passport = require('passport');
 const Farmer = require('./models/farmer');
 const mongoose = require('mongoose');
-const { use } = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 
