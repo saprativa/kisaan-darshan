@@ -53,8 +53,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+// build production
+app.use(express.static(path.join(__dirname, "client/build")))
+
+
 // initilaize the routes
 app.use('/api', require('./routes/api'));
+
+// build production
+app.get("*", (req, res) => {
+  return res.sendFile(path.join(__dirname, "/client/build/index.html"))
+})
 
 
 // came with express generator
