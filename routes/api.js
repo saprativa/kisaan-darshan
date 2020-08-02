@@ -6,8 +6,8 @@ var Farmer = require('../models/farmer')
 const { body, validationResult } = require('express-validator');
 
 // Test
-router.get('/test', function(req, res, next) {
-  res.send("Hi there!")
+router.get('/auth', passport.authenticate('jwt', { session: false }), function(req, res, next) {
+  res.json(req.user)
 })
 
 
