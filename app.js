@@ -19,9 +19,18 @@ var app = express();
 app.use(passport.initialize());
 
 
+const cookieExtractor = function(req) {
+  var token = null;
+  if (req && req.cookies)
+  {
+      token = req.cookies['token'];
+  }
+  return token;
+};
+
 // passport-jwt-strategy
 var opts = {}
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.jwtFromRequest = cookieExtractor;
 opts.secretOrKey = 'jai_jawan_jai_kisaan';
 
 passport.use(new JwtStrategy(opts, function(jwt_payload, done) {

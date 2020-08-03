@@ -11,12 +11,19 @@ router.get('/auth', passport.authenticate('jwt', { session: false }), function(r
 })
 
 
+// LOGOUT
+router.get('/logout', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+  res.clearCookie('token')
+  res.json({success: true})
+})
+
 // LOGIN
 router.post('/login',
   passport.authenticate('local', { session: false }),
   function(req, res) {
     const token = jwt.sign({_id: req.user._id}, 'jai_jawan_jai_kisaan')
-    return res.json({token: token, success: true})
+    res.cookie("token", token, { httpOnly: true, sameSite: true })
+    return res.json({success: true})
   }
 )
 

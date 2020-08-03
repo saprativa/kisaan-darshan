@@ -23,7 +23,6 @@ export default function Login() {
     axios.post('/api/login', data)
     .then((response) => {
       if (response.data.success) {
-        localStorage.setItem("token", response.data.token)
         history.push("/")
       } 
     })
