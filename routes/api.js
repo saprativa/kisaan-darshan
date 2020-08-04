@@ -7,7 +7,7 @@ const { body, validationResult } = require('express-validator');
 
 // GET USER DETAILS
 router.get('/auth', passport.authenticate('jwt', { session: false }), function(req, res, next) {
-  res.json(req.user)
+  res.status(200).json(req.user)
 })
 
 
@@ -23,7 +23,7 @@ router.post('/login',
   function(req, res) {
     const token = jwt.sign({_id: req.user._id}, 'jai_jawan_jai_kisaan')
     res.cookie("token", token, { httpOnly: true, sameSite: true })
-    return res.json({success: true})
+    return res.status(200).json({success: true, user: req.user.firstName + " " + req.user.lastName})
   }
 )
 

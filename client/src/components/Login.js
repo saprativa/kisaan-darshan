@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useContext } from "react"
 import { useForm } from "react-hook-form"
 import { useHistory } from "react-router-dom";
 import { yupResolver } from '@hookform/resolvers'
 import * as yup from "yup"
 import axios from 'axios'
 import './Login.css'
+import { AuthContext } from '../context/AuthContext'
 
 const schema = yup.object().shape({
   mobile: yup.string().required("Please enter Mobile Number."),
@@ -17,12 +18,16 @@ export default function Login() {
     resolver: yupResolver(schema)
   })
 
+  var {setIsAuthenticated, setUser} = useContext(AuthContext)
+
   const history = useHistory()
 
   const onSubmit = data => {
     axios.post('/api/login', data)
     .then((response) => {
       if (response.data.success) {
+        setIsAuthenticated(true)
+        setUser(response.data.user)
         history.push("/")
       } 
     })
