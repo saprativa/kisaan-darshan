@@ -1,6 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext } from 'react'
 import {AuthContext} from '../context/AuthContext'
-import { NavLink } from 'react-router-dom';
+import axios from 'axios'
+import { useHistory } from "react-router-dom"
+import { NavLink } from 'react-router-dom'
 import {
   Collapse,
   Navbar as ReactstrapNavbar,
@@ -8,14 +10,17 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavbarText
-} from 'reactstrap';
+  NavbarText,
+  Button
+} from 'reactstrap'
 
 
 const Navbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const {isAuthenticated, user} = useContext(AuthContext)
+  const history = useHistory()
+
+  const {isAuthenticated, user, setIsAuthenticated, setUser} = useContext(AuthContext)
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -39,13 +44,32 @@ const Navbar = (props) => {
       <>
         <Nav className="mr-auto" navbar>
           <NavItem>
-            <NavLink to="/secret" className="nav-link">Secret</NavLink>
+            <NavLink to="/dashboard" className="nav-link">Dashboard</NavLink>
           </NavItem>
         </Nav>
-        <NavbarText>Welcome {user}</NavbarText>
+        <Nav className="navbar-nav ml-auto" navbar>
+          <NavbarText>Welcome {user} &nbsp;</NavbarText>
+          <Button color="secondary" onClick={logoutHandler}>Logout</Button>
+        </Nav>
       </>
     )
   }
+
+
+  const logoutHandler = () => {
+    axios.get('/api/logout')
+    .then((response) => {
+      if (response.data.success) {
+        setIsAuthenticated(false)
+        setUser(null)
+        history.push("/login")
+      } 
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+
 
   return (
     <div>

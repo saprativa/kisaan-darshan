@@ -28,7 +28,7 @@ export default function Login() {
       if (response.data.success) {
         setIsAuthenticated(true)
         setUser(response.data.user)
-        history.push("/")
+        history.push("/dashboard")
       } 
     })
     .catch((error) => {

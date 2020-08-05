@@ -4,9 +4,9 @@ import { Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
-import Secret from './components/Secret';
 import Error from './components/Error';
 import PrivateRoute from './hocs/PrivateRoute'
+import Dashboard from './components/Dashboard';
 
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
         <Route path="/" component={Home} exact />
         <Route path="/login" component={Login}  exact />
         <Route path="/register" component={Register} exact />
-        <PrivateRoute path="/secret" component={Secret} exact />
+        <PrivateRoute path="/dashboard" component={Dashboard} exact />
         <Route component={Error} />
       </Switch>
     </div>
