@@ -18,7 +18,7 @@ export default function Login() {
     resolver: yupResolver(schema)
   })
 
-  var {setIsAuthenticated, setUser} = useContext(AuthContext)
+  const {setIsAuthenticated, setUser} = useContext(AuthContext)
 
   const history = useHistory()
 

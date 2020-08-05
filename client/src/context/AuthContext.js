@@ -1,9 +1,9 @@
 import React, { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
 
-export const AuthContext = createContext()
+const AuthContext = createContext()
 
-export default ({ children }) => {
+const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
@@ -32,3 +32,5 @@ export default ({ children }) => {
         </div>
     )
 }
+
+export {AuthContext, AuthContextProvider}

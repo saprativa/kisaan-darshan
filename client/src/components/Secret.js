@@ -5,7 +5,7 @@ import axios from 'axios'
 
 function Secret() {
 
-  var {setIsAuthenticated, setUser, user, isAuthenticated} = useContext(AuthContext)
+  const {setIsAuthenticated, setUser, user, isAuthenticated} = useContext(AuthContext)
   const history = useHistory()
   console.log('Secret')
   console.log(user)

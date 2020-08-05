@@ -1,5 +1,5 @@
 import React from 'react'
-import MyNavbar from './components/MyNavbar';
+import Navbar from './components/Navbar';
 import { Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Login';
@@ -12,7 +12,7 @@ import PrivateRoute from './hocs/PrivateRoute'
 function App() {
   return (
     <div className="App">
-      <MyNavbar />
+      <Navbar />
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/login" component={Login}  exact />
