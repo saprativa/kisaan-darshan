@@ -6,7 +6,8 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Error from './components/Error';
 import PrivateRoute from './hocs/PrivateRoute'
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/Dashboard'
+import Profile from './components/Profile'
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" component={Login}  exact />
         <Route path="/register" component={Register} exact />
         <PrivateRoute path="/dashboard" component={Dashboard} exact />
+        <PrivateRoute path="/profile" component={Profile} exact />
         <Route component={Error} />
       </Switch>
     </div>

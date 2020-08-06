@@ -46,6 +46,9 @@ const Navbar = (props) => {
           <NavItem>
             <NavLink to="/dashboard" className="nav-link">Dashboard</NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink to="/profile" className="nav-link">Profile</NavLink>
+          </NavItem>
         </Nav>
         <Nav className="navbar-nav ml-auto" navbar>
           <NavbarText>Welcome {user} &nbsp;</NavbarText>
