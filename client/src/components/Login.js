@@ -18,7 +18,7 @@ export default function Login() {
     resolver: yupResolver(schema)
   })
 
-  const {setIsAuthenticated, setUser} = useContext(AuthContext)
+  const {setIsAuthenticated, setUser, setProfile} = useContext(AuthContext)
 
   const history = useHistory()
 
@@ -28,6 +28,7 @@ export default function Login() {
       if (response.data.success) {
         setIsAuthenticated(true)
         setUser(response.data.user)
+        setProfile(response.data.profile)
         history.push("/dashboard")
       } 
     })

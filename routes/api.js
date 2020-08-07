@@ -23,7 +23,11 @@ router.post('/login',
   function(req, res) {
     const token = jwt.sign({_id: req.user._id}, 'jai_jawan_jai_kisaan')
     res.cookie("token", token, { httpOnly: true, sameSite: true })
-    return res.status(200).json({success: true, user: req.user.firstName + " " + req.user.lastName})
+    return res.status(200).json({
+      success: true, 
+      user: req.user.firstName + " " + req.user.lastName,
+      profile: req.user
+    })
   }
 )
 

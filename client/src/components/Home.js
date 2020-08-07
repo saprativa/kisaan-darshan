@@ -1,6 +1,6 @@
 import React from 'react'
 // import { Jumbotron, Button } from 'reactstrap'
-import { UncontrolledCarousel } from 'reactstrap';
+import { UncontrolledCarousel, Jumbotron, Container } from 'reactstrap';
 
 const items = [
   {
@@ -27,7 +27,28 @@ const items = [
 ];
 
 
-const Home = () => <UncontrolledCarousel items={items} />
+const Home = () => {
+  return(
+    <div>
+      <UncontrolledCarousel items={items} />
+      
+      <Jumbotron fluid>
+        <Container fluid>
+          <h1 className="display-3">Welcome to Kisaan Darshan</h1>
+          <p className="lead">
+            Kisaan Darshan a medium to cater the need of farmers world. The idea is to bring all stakeholders on single platform where all interact seemingly with respect to farmers and farming community. It will help in reducing the communication gap between all components of agricultural system. With each passing days digitization becoming real and compelling in such scenario Indian farmers should also be not left behind.
+            Agriculture a time dependent system so our knowledge base system should readily be available with the solutions at all stages of agricultural system in real time – realization of the concept “Lab to Land”.
+            Farming is a full time business; farmers must realize it to have the sense of entitlement particularly small and marginal farmers. Kishan Darshan provides an opportunity by involving in marketing of own produce, analyzing the cost and market demand and by allowing to interact with industry experts.
+            Real time primary unedited and un-manipulated data will be easily accessible through Kishan Darshan to agricultural policy makers be it our government or private players. The platform through the information aims to industrial setup at village level by identifying the potential of particular village – An opportunity for investors and local vendors.
+            Finally consumer will get the opportunity to not only know their farmers and farming tradition but also be able purchase quality produce directly from them – Farm to Fork.
+
+          </p>
+        </Container>
+      </Jumbotron>
+      
+    </div>
+  )
+} 
 
 export default Home
 
