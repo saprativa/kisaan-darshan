@@ -10,7 +10,7 @@ const schema = yup.object().shape({
   firstName: yup.string().required("Please enter First Name."),
   lastName: yup.string().required("Please enter Last Name."),
   age: yup.string().required("Please enter Age."),
-  sex: yup.string().required("Please enter Sex."),
+  sex: yup.string().ensure().matches(/[a-zA-Z]+/, "Please enter Sex."),
   mobile: yup.string().required("Please enter Mobile Number."),
   email: yup.string().email("Please enter a valid Email."),
   village: yup.string().required("Please enter Village."),
@@ -59,7 +59,11 @@ export default function Register() {
       <input type="text" name="age" placeholder="Age" ref={register} />
       <p className="error">{errors.age?.message}</p>
 
-      <input type="text" name="sex" placeholder="Sex" ref={register} />
+      <select name="sex" ref={register}>
+        <option disabled selected value=""> -- Select Sex -- </option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
       <p className="error">{errors.sex?.message}</p>
 
       <input type="text" name="mobile" placeholder="Mobile Number" ref={register} />
