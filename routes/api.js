@@ -40,9 +40,9 @@ router.post('/register', [
   body('mobile', 'Please enter a valid mobile number.').notEmpty().bail().isMobilePhone("en-IN"),
   body('email', 'Please enter a valid email.').optional({ checkFalsy: true }).isEmail().normalizeEmail(),
   body('village', 'Please enter village.').notEmpty().bail().isAlpha().trim().escape(),
-  body('block', 'Please enter block.').notEmpty().bail().isAlpha().trim().escape(),
-  body('district', 'Please enter disctrict.').notEmpty().bail().isAlpha().trim().escape(),
-  body('state', 'Please enter state.').notEmpty().bail().isAlpha().trim().escape(),
+  body('block', 'Please enter block.').notEmpty().bail().isNumeric().trim().escape(),
+  body('district', 'Please enter disctrict.').notEmpty().bail().isNumeric().trim().escape(),
+  body('state', 'Please enter state.').notEmpty().bail().isNumeric().trim().escape(),
   body('password', 'Please enter password of atleast 5 characters.').notEmpty().bail().isLength({min: 5}).trim().escape(),
 ], function(req, res, next) {
   const errors = validationResult(req)

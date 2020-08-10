@@ -12,21 +12,24 @@ const schema = yup.object().shape({
   firstName: yup.string().required("Please enter First Name."),
   lastName: yup.string().required("Please enter Last Name."),
   age: yup.string().required("Please enter Age."),
-  sex: yup.string().ensure().matches(/[a-zA-Z]+/, "Please enter Sex."),
+  sex: yup.string().matches(/^[a-zA-Z]/, "Please enter Sex."),
   mobile: yup.string().required("Please enter Mobile Number."),
   email: yup.string().email("Please enter a valid Email."),
   village: yup.string().required("Please enter Village."),
-  block: yup.string().required("Please enter Block."),
-  district: yup.string().required("Please enter District."),
-  state: yup.string().required("Please enter State."),
+  block: yup.string().matches(/^[0-9]/, "Please enter Block."),
+  district: yup.string().matches(/^[0-9]/, "Please enter District."),
+  state: yup.string().matches(/^[0-9]/, "Please enter State."),
   password: yup.string().required("Please enter Password.")
 })
 
 export default function Register() {
 
-  const [stateID, setStateID] = useState(0)
-  const [districtID, setdistrictID] = useState(0)
-  const [blockID, setblockID] = useState(0)
+  const [isStateSelected, setIsStateSelected] = useState(false)
+  const [isDistrictSelected, setIsDistrictSelected] = useState(false)
+  const [stateID, setStateID] = useState('')
+  const [districtID, setDistrictID] = useState('')
+  const [blockID, setBlockID] = useState('')
+  const [sex, setSex] = useState('')
 
   const { register, handleSubmit, errors, setError } = useForm({
     resolver: yupResolver(schema)
@@ -51,18 +54,25 @@ export default function Register() {
   }
 
   const stateChangeHandler = (e) => {
+    setIsStateSelected(true)
+    setIsDistrictSelected(false)
     setStateID(e.target.value)
-    setdistrictID('')
-    setblockID('')
+    setDistrictID('')
+    setBlockID('')
   }
 
   const districtChangeHandler = (e) => {
-    setdistrictID(e.target.value)
-    setblockID('')
+    setIsDistrictSelected(true)
+    setDistrictID(e.target.value)
+    setBlockID('')
   }
 
   const blockChangeHandler = (e) => {
-    setblockID(e.target.value)
+    setBlockID(e.target.value)
+  }
+
+  const sexChangeHandler = (e) => {
+    setSex(e.target.value)
   }
 
 
@@ -81,8 +91,8 @@ export default function Register() {
       <input type="text" name="age" placeholder="Age" ref={register} />
       <p className="error">{errors.age?.message}</p>
 
-      <select name="sex" ref={register}>
-        <option disabled selected value=""> -- Select Sex -- </option>
+      <select name="sex" value={sex} ref={register} onChange={sexChangeHandler}>
+        <option>-- Select Sex --</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
       </select>
@@ -94,37 +104,82 @@ export default function Register() {
       <input type="text" name="email" placeholder="Email (optional)" ref={register} />
       <p className="error">{errors.email?.message}</p>
 
-      <select name="state" ref={register} onChange={stateChangeHandler}>
-        {stateDistrictBlockList.map((state, index) =>(
+      {isStateSelected?
+      <>
+        <select name="state" value={stateID} ref={register} onChange={stateChangeHandler}>
+          <option disabled>-- Select State --</option>
+          {stateDistrictBlockList.map((state, index) =>(
           <option key={index} value={index}>
             {state.name}
           </option>
-        ))}
-      </select>
-      {/* <input type="text" name="state" placeholder="State" ref={register} /> */}
-      <p className="error">{errors.state?.message}</p>
+          ))}
+        </select>
+        <p className="error">{errors.state?.message}</p>
 
-      <select name="district" value={districtID} ref={register} onChange={districtChangeHandler}>
-        <option>-- Select District --</option>
-        {stateDistrictBlockList[stateID].districtList.map((district, index) =>(
-          <option key={index} value={index}>
-            {district.name}
-          </option>
-        ))}
-      </select>
-      {/* <input type="text" name="district" placeholder="District" ref={register} /> */}
-      <p className="error">{errors.district?.message}</p>
+        {isDistrictSelected?
+          <>
+            <select name="district" value={districtID} ref={register} onChange={districtChangeHandler}>
+              <option disabled>-- Select District --</option>
+              {stateDistrictBlockList[stateID].districtList.map((district, index) =>(
+              <option key={index} value={index}>
+                {district.name}
+              </option>
+              ))}
+            </select>
+            <p className="error">{errors.district?.message}</p>
 
-      <select name="block" value={blockID} ref={register} onChange={blockChangeHandler}>
-        <option>-- Select Block --</option>
-        {stateDistrictBlockList[1][0].blockList.map((block, index) =>(
+            <select name="block" value={blockID} ref={register} onChange={blockChangeHandler}>
+              <option>-- Select Block --</option>
+              {stateDistrictBlockList[stateID].districtList[districtID].blockList.map((block, index) =>(
+              <option key={index} value={index}>
+                {block}
+              </option>
+              ))}
+            </select>
+            <p className="error">{errors.block?.message}</p>
+          </>
+          :
+          <>
+            <select name="district" value={districtID} ref={register} onChange={districtChangeHandler}>
+              <option>-- Select District --</option>
+              {stateDistrictBlockList[stateID].districtList.map((district, index) =>(
+              <option key={index} value={index}>
+                {district.name}
+              </option>
+              ))}
+            </select>
+            <p className="error">{errors.district?.message}</p>
+
+            <select name="block" value={blockID} ref={register} onChange={blockChangeHandler}>
+              <option>-- Select Block --</option>
+            </select>
+            <p className="error">{errors.block?.message}</p>
+          </>
+        }
+      </>
+        :
+      <>
+        <select name="state" value={stateID} ref={register} onChange={stateChangeHandler}>
+          <option>-- Select State --</option>
+          {stateDistrictBlockList.map((state, index) =>(
           <option key={index} value={index}>
-            {block.name}
+            {state.name}
           </option>
-        ))}
-      </select>
-      <input type="text" name="block" placeholder="Block" ref={register} />
-      <p className="error">{errors.block?.message}</p>
+          ))}
+        </select>
+        <p className="error">{errors.state?.message}</p>
+
+        <select name="district" value={districtID} ref={register} onChange={districtChangeHandler}>
+          <option>-- Select District --</option>
+        </select>
+        <p className="error">{errors.district?.message}</p>
+
+        <select name="block" value={blockID} ref={register} onChange={blockChangeHandler}>
+          <option>-- Select Block --</option>
+        </select>
+        <p className="error">{errors.block?.message}</p>
+      </>
+      }
 
       <input type="text" name="village" placeholder="Village" ref={register} />
       <p className="error">{errors.village?.message}</p>
