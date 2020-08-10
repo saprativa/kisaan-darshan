@@ -4,8 +4,9 @@ import { useHistory } from "react-router-dom";
 import { yupResolver } from '@hookform/resolvers'
 import * as yup from "yup"
 import axios from 'axios'
-import './Login.css'
+// import './Login.css'
 import { AuthContext } from '../context/AuthContext'
+import { Input } from 'reactstrap'
 
 const schema = yup.object().shape({
   mobile: yup.string().required("Please enter Mobile Number."),
@@ -39,11 +40,11 @@ export default function Login() {
 
   return (
      
-    <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
 
       <p className="error">{errors.server?.message}</p>
       
-      <input type="text" name="mobile" placeholder="Mobile Number" ref={register} />
+      <Input type="text" name="mobile" placeholder="Mobile Number" innerRef={register} valid />
       <p className="error">{errors.mobile?.message}</p>
         
       <input type="password" name="password" placeholder="Password" ref={register} />
