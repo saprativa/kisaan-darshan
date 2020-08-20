@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { yupResolver } from '@hookform/resolvers'
 import * as yup from "yup"
 import axios from 'axios'
-import './Login.css'
+import './styles.css'
 
 const stateDistrictBlockList = require('../lib/MasterDatabase.json')
 
