@@ -5,6 +5,8 @@ import { yupResolver } from '@hookform/resolvers'
 import * as yup from "yup"
 import axios from 'axios'
 import './styles.css'
+import { Input, FormFeedback, FormGroup, Alert, Button } from 'reactstrap'
+import classnames from 'classnames'
 
 const stateDistrictBlockList = require('../lib/MasterDatabase.json')
 
@@ -13,13 +15,13 @@ const schema = yup.object().shape({
   lastName: yup.string().required("Please enter Last Name."),
   age: yup.string().required("Please enter Age."),
   sex: yup.string().matches(/^[a-zA-Z]/, "Please enter Sex."),
-  mobile: yup.string().required("Please enter Mobile Number."),
+  mobile: yup.string().required("Please enter Mobile Number.").min(10, "Invalid Mobile Number.").max(10, "Invalid Mobile Number."),
   email: yup.string().email("Please enter a valid Email."),
   village: yup.string().required("Please enter Village."),
   block: yup.string().matches(/^[0-9]/, "Please enter Block."),
   district: yup.string().matches(/^[0-9]/, "Please enter District."),
   state: yup.string().matches(/^[0-9]/, "Please enter State."),
-  password: yup.string().required("Please enter Password.")
+  password: yup.string().required("Please enter Password.").min(5, "Minimum 5 characters.")
 })
 
 export default function Register() {
@@ -31,9 +33,14 @@ export default function Register() {
   const [blockID, setBlockID] = useState('')
   const [sex, setSex] = useState('')
 
-  const { register, handleSubmit, errors, setError } = useForm({
+  const { register, handleSubmit, errors, setError, watch } = useForm({
+    mode: 'onChange',
     resolver: yupResolver(schema)
   })
+
+  console.log(errors.sex?.message)
+
+  const watchAllFields = watch()
 
   const history = useHistory();
 
@@ -77,117 +84,167 @@ export default function Register() {
 
 
   return (
+
+    <div className="outer">
      
-    <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+    <form className="registrationForm" onSubmit={handleSubmit(onSubmit)}>
 
-      <p className="error">{errors.server?.message}</p>
-      
-      <input type="text" name="firstName" placeholder="First Name" ref={register} />
-      <p className="error">{errors.firstName?.message}</p>
+      {
+        errors.server?
+        <Alert color="danger">
+          {errors.server?.message}
+        </Alert>
+        :
+        <p></p>
+      }
 
-      <input type="text" name="lastName" placeholder="Last Name" ref={register} />
-      <p className="error">{errors.lastName?.message}</p>
+      <FormGroup>
+        <Input type="text" name="firstName" placeholder="First Name" innerRef={register} 
+        className={classnames({'is-invalid': errors.firstName, 
+        'is-valid': watchAllFields.firstName && !errors.firstName})} />
+        <FormFeedback>{errors.firstName?.message}</FormFeedback>
+      </FormGroup>
 
-      <input type="text" name="age" placeholder="Age" ref={register} />
-      <p className="error">{errors.age?.message}</p>
+      <FormGroup>
+        <Input type="text" name="lastName" placeholder="Last Name" innerRef={register} 
+        className={classnames({'is-invalid': errors.lastName, 
+        'is-valid': watchAllFields.lastName && !errors.lastName})} />
+        <FormFeedback>{errors.lastName?.message}</FormFeedback>
+      </FormGroup>
 
-      <select name="sex" value={sex} ref={register} onChange={sexChangeHandler}>
-        <option>-- Select Sex --</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-      </select>
-      <p className="error">{errors.sex?.message}</p>
+      <FormGroup>
+        <Input type="text" name="age" placeholder="Age" innerRef={register} 
+        className={classnames({'is-invalid': errors.age, 
+        'is-valid': watchAllFields.age && !errors.age})} />
+        <FormFeedback>{errors.age?.message}</FormFeedback>
+      </FormGroup>
 
-      <input type="text" name="mobile" placeholder="Mobile Number" ref={register} />
-      <p className="error">{errors.mobile?.message}</p>
+      <FormGroup>
+        <Input type="select" name="sex" value={sex} innerRef={register} onChange={sexChangeHandler}
+        className={classnames({'is-invalid': errors.sex})}>
+          <option>-- Select Sex --</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </Input>
+        <p className="errorMessage">{errors.sex?.message}</p>
+      </FormGroup>
 
-      <input type="text" name="email" placeholder="Email (optional)" ref={register} />
-      <p className="error">{errors.email?.message}</p>
+      <FormGroup>
+        <Input type="text" name="mobile" placeholder="Mobile Number" innerRef={register} 
+        className={classnames({'is-invalid': errors.mobile, 
+        'is-valid': watchAllFields.mobile && !errors.mobile})} />
+        <FormFeedback>{errors.mobile?.message}</FormFeedback>
+      </FormGroup>
+
+      <FormGroup>
+        <Input type="text" name="email" placeholder="Email (optional)" innerRef={register} 
+        className={classnames({'is-invalid': errors.email, 
+        'is-valid': watchAllFields.email && !errors.email})} />
+        <FormFeedback>{errors.email?.message}</FormFeedback>
+      </FormGroup>
 
       {isStateSelected?
       <>
-        <select name="state" value={stateID} ref={register} onChange={stateChangeHandler}>
+        <Input type="select" name="state" value={stateID} innerRef={register} onChange={stateChangeHandler}
+        className={classnames({'is-invalid': errors.state})}>
           <option disabled>-- Select State --</option>
           {stateDistrictBlockList.map((state, index) =>(
           <option key={index} value={index}>
             {state.name}
           </option>
           ))}
-        </select>
-        <p className="error">{errors.state?.message}</p>
+        </Input>
+        <p className="errorMessage">{errors.state?.message}</p>
 
         {isDistrictSelected?
           <>
-            <select name="district" value={districtID} ref={register} onChange={districtChangeHandler}>
+            <Input type="select" name="district" value={districtID} innerRef={register} onChange={districtChangeHandler}
+            className={classnames({'is-invalid': errors.district})}>
               <option disabled>-- Select District --</option>
               {stateDistrictBlockList[stateID].districtList.map((district, index) =>(
               <option key={index} value={index}>
                 {district.name}
               </option>
               ))}
-            </select>
-            <p className="error">{errors.district?.message}</p>
+            </Input>
+            <p className="errorMessage">{errors.district?.message}</p>
 
-            <select name="block" value={blockID} ref={register} onChange={blockChangeHandler}>
+            <Input type="select" name="block" value={blockID} innerRef={register} onChange={blockChangeHandler}
+            className={classnames({'is-invalid': errors.block})}>
               <option>-- Select Block --</option>
               {stateDistrictBlockList[stateID].districtList[districtID].blockList.map((block, index) =>(
               <option key={index} value={index}>
                 {block}
               </option>
               ))}
-            </select>
-            <p className="error">{errors.block?.message}</p>
+            </Input>
+            <p className="errorMessage">{errors.block?.message}</p>
           </>
           :
           <>
-            <select name="district" value={districtID} ref={register} onChange={districtChangeHandler}>
+            <Input type="select" name="district" value={districtID} innerRef={register} onChange={districtChangeHandler}
+            className={classnames({'is-invalid': errors.district})}>
               <option>-- Select District --</option>
               {stateDistrictBlockList[stateID].districtList.map((district, index) =>(
               <option key={index} value={index}>
                 {district.name}
               </option>
               ))}
-            </select>
-            <p className="error">{errors.district?.message}</p>
+            </Input>
+            <p className="errorMessage">{errors.district?.message}</p>
 
-            <select name="block" value={blockID} ref={register} onChange={blockChangeHandler}>
+            <Input type="select" name="block" value={blockID} innerRef={register} onChange={blockChangeHandler}
+            className={classnames({'is-invalid': errors.block})}>
               <option>-- Select Block --</option>
-            </select>
-            <p className="error">{errors.block?.message}</p>
+            </Input>
+            <p className="errorMessage">{errors.block?.message}</p>
           </>
         }
       </>
         :
       <>
-        <select name="state" value={stateID} ref={register} onChange={stateChangeHandler}>
+        <Input type="select" name="state" value={stateID} innerRef={register} onChange={stateChangeHandler}
+        className={classnames({'is-invalid': errors.state})}>
           <option>-- Select State --</option>
           {stateDistrictBlockList.map((state, index) =>(
           <option key={index} value={index}>
             {state.name}
           </option>
           ))}
-        </select>
-        <p className="error">{errors.state?.message}</p>
+        </Input>
+        <p className="errorMessage">{errors.state?.message}</p>
 
-        <select name="district" value={districtID} ref={register} onChange={districtChangeHandler}>
+        <Input type="select" name="district" value={districtID} innerRef={register} onChange={districtChangeHandler}
+        className={classnames({'is-invalid': errors.district})}>
           <option>-- Select District --</option>
-        </select>
-        <p className="error">{errors.district?.message}</p>
+        </Input>
+        <p className="errorMessage">{errors.district?.message}</p>
 
-        <select name="block" value={blockID} ref={register} onChange={blockChangeHandler}>
+        <Input type="select" name="block" value={blockID} innerRef={register} onChange={blockChangeHandler}
+        className={classnames({'is-invalid': errors.block})}>
           <option>-- Select Block --</option>
-        </select>
-        <p className="error">{errors.block?.message}</p>
+        </Input>
+        <p className="errorMessage">{errors.block?.message}</p>
       </>
       }
 
-      <input type="text" name="village" placeholder="Village" ref={register} />
-      <p className="error">{errors.village?.message}</p>
-        
-      <input type="password" name="password" placeholder="Password" ref={register} />
-      <p className="error">{errors.password?.message}</p>
+      <FormGroup>
+        <Input type="text" name="village" placeholder="Village" innerRef={register} 
+        className={classnames({'is-invalid': errors.village, 
+        'is-valid': watchAllFields.village && !errors.village})} />
+        <FormFeedback>{errors.village?.message}</FormFeedback>
+      </FormGroup>
+
+      <FormGroup>
+        <Input type="password" name="password" placeholder="Password" innerRef={register} 
+        className={classnames({'is-invalid': errors.password, 
+        'is-valid': watchAllFields.password && !errors.password})} />
+        <FormFeedback>{errors.password?.message}</FormFeedback>
+      </FormGroup>
       
-      <input type="submit" value="Register" />
+      <Button>Register</Button>
     </form>
+
+    </div>
   )
 }

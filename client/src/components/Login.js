@@ -6,7 +6,7 @@ import * as yup from "yup"
 import axios from 'axios'
 import './styles.css'
 import { AuthContext } from '../context/AuthContext'
-import { Input, FormFeedback, FormGroup, Alert } from 'reactstrap'
+import { Input, FormFeedback, FormGroup, Alert, Button } from 'reactstrap'
 import classnames from 'classnames'
 
 const schema = yup.object().shape({
@@ -46,7 +46,7 @@ export default function Login() {
 
     <div className="outer">
      
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className="loginForm" onSubmit={handleSubmit(onSubmit)}>
       
       {
         errors.server?
@@ -57,10 +57,10 @@ export default function Login() {
         <p></p>
       }
       
-      
       <FormGroup>
         <Input type="text" name="mobile" placeholder="Mobile Number" innerRef={register} 
-        className={classnames({'is-invalid': errors.mobile, 'is-valid': watchAllFields.mobile && !errors.mobile})} />
+        className={classnames({'is-invalid': errors.mobile, 
+        'is-valid': watchAllFields.mobile && !errors.mobile})} />
         <FormFeedback>{errors.mobile?.message}</FormFeedback>
       </FormGroup>
 
@@ -69,8 +69,8 @@ export default function Login() {
         className={classnames({'is-invalid': errors.password, 'is-valid': watchAllFields.password && !errors.password})} />
         <FormFeedback>{errors.password?.message}</FormFeedback>
       </FormGroup>
-      
-      <input type="submit" value="Login" />
+
+      <Button>Login</Button>
     </form>
 
     </div>
