@@ -1,8 +1,10 @@
+
 .outer {
   position: relative;
   height: 500px;
   width: 100%;
 }
+
 .loginForm {
   position: absolute;
   width: 30%;
@@ -24,4 +26,13 @@
   margin-top: 0.25rem;
   font-size: 80%;
   color: #dc3545;
+}
+
+.role {
+  background-color: burlywood;
+  justify-content: space-evenly;
+}
+
+.fill {
+  background-color: royalblue;
 }

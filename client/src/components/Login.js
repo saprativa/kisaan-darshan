@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useHistory } from "react-router-dom";
 import { yupResolver } from '@hookform/resolvers'
@@ -6,7 +6,8 @@ import * as yup from "yup"
 import axios from 'axios'
 import './styles.css'
 import { AuthContext } from '../context/AuthContext'
-import { Input, FormFeedback, FormGroup, Alert, Button } from 'reactstrap'
+import { Input, FormFeedback, FormGroup, Button } from 'reactstrap'
+import Alert from 'react-bootstrap/Alert'
 import classnames from 'classnames'
 
 const schema = yup.object().shape({
@@ -27,6 +28,8 @@ export default function Login() {
 
   const history = useHistory()
 
+  const [show, setShow] = useState(false);
+
   const onSubmit = data => {
     axios.post('/api/login', data)
     .then((response) => {
@@ -39,6 +42,7 @@ export default function Login() {
     })
     .catch((error) => {
       setError("server", {type: "manual", message: "Invalid Mobile Number/Password."})
+      setShow(true)
     })
   }
 
@@ -50,7 +54,7 @@ export default function Login() {
       
       {
         errors.server?
-        <Alert color="danger">
+        <Alert variant="danger" show={show} dismissible onClose={() => setShow(false)}>
           {errors.server?.message}
         </Alert>
         :
