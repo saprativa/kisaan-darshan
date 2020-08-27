@@ -44,6 +44,9 @@ const farmerSchema = new Schema({
     state: {
         type: String,
         required: true
+    },
+    role: {
+        type: String
     }
 });
 

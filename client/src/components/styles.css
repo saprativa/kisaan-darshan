@@ -28,11 +28,10 @@
   color: #dc3545;
 }
 
-.role {
-  background-color: burlywood;
-  justify-content: space-evenly;
-}
-
-.fill {
-  background-color: royalblue;
+.roleContainer {
+  position: absolute;
+  /* width: 30%; */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

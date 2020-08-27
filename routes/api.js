@@ -11,6 +11,28 @@ router.get('/auth', passport.authenticate('jwt', { session: false }), function(r
 })
 
 
+// SET USER ROLE
+router.post('/role', passport.authenticate('jwt', { session: false }), function(req, res, next) {
+  Farmer.findById(req.user._id, (err, farmer) => {
+    if(!farmer) {
+      res.send("Not found")
+    } else if(err) {
+      res.send(err)
+    } else {
+      farmer.role = req.body.role
+      farmer.save()
+      .then(farmer => {
+        res.send(farmer)
+      })
+      .catch(err => {
+        res.send(err)
+      })
+    }
+  })
+  // res.send(req.user._id)
+})
+
+
 // LOGOUT
 router.get('/logout', passport.authenticate('jwt', { session: false }), (req, res, next) => {
   res.clearCookie('token')
