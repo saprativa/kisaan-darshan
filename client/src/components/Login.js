@@ -24,7 +24,7 @@ export default function Login() {
 
   const watchAllFields = watch();
 
-  const {setIsAuthenticated, setUser, setProfile} = useContext(AuthContext)
+  const {isAuthenticated, setIsAuthenticated, setUser, setProfile} = useContext(AuthContext)
 
   const history = useHistory()
 
@@ -53,34 +53,37 @@ export default function Login() {
   return (
 
     <div className="outer">
-     
-    <form className="loginForm" onSubmit={handleSubmit(onSubmit)}>
-      
       {
-        errors.server?
-        <Alert variant="danger" show={show} dismissible onClose={() => setShow(false)}>
-          {errors.server?.message}
-        </Alert>
+        isAuthenticated
+        ? <p className="loginForm">You are already logged in. Please logout to login as a different user.</p>
         :
-        <p></p>
+        <form className="loginForm" onSubmit={handleSubmit(onSubmit)}>
+          
+          {
+            errors.server?
+            <Alert variant="danger" show={show} dismissible onClose={() => setShow(false)}>
+              {errors.server?.message}
+            </Alert>
+            :
+            <p></p>
+          }
+          
+          <FormGroup>
+            <Input type="text" name="mobile" placeholder="Mobile Number" innerRef={register} 
+            className={classnames({'is-invalid': errors.mobile, 
+            'is-valid': watchAllFields.mobile && !errors.mobile})} />
+            <FormFeedback>{errors.mobile?.message}</FormFeedback>
+          </FormGroup>
+
+          <FormGroup>
+            <Input type="password" name="password" placeholder="Password" innerRef={register} 
+            className={classnames({'is-invalid': errors.password, 'is-valid': watchAllFields.password && !errors.password})} />
+            <FormFeedback>{errors.password?.message}</FormFeedback>
+          </FormGroup>
+
+          <Button>Login</Button>
+        </form>
       }
-      
-      <FormGroup>
-        <Input type="text" name="mobile" placeholder="Mobile Number" innerRef={register} 
-        className={classnames({'is-invalid': errors.mobile, 
-        'is-valid': watchAllFields.mobile && !errors.mobile})} />
-        <FormFeedback>{errors.mobile?.message}</FormFeedback>
-      </FormGroup>
-
-      <FormGroup>
-        <Input type="password" name="password" placeholder="Password" innerRef={register} 
-        className={classnames({'is-invalid': errors.password, 'is-valid': watchAllFields.password && !errors.password})} />
-        <FormFeedback>{errors.password?.message}</FormFeedback>
-      </FormGroup>
-
-      <Button>Login</Button>
-    </form>
-
     </div>
   )
 }

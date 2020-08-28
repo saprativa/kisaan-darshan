@@ -29,7 +29,6 @@ router.post('/role', passport.authenticate('jwt', { session: false }), function(
       })
     }
   })
-  // res.send(req.user._id)
 })
 
 
