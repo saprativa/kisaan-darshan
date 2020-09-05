@@ -37,11 +37,7 @@ export default function Login() {
         setIsAuthenticated(true)
         setUser(response.data.user)
         setProfile(response.data.profile)
-        if (!response.data.profile.role) {
-          history.push("/role")
-        } else {
-          history.push("/dashboard")
-        }
+        history.push("/dashboard")
       } 
     })
     .catch((error) => {

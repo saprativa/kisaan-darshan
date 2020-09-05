@@ -25,7 +25,7 @@ const schema = yup.object().shape({
   password: yup.string().required("Please enter Password.").min(5, "Minimum 5 characters.")
 })
 
-export default function Register() {
+export default function Register(props) {
 
   const [isStateSelected, setIsStateSelected] = useState(false)
   const [isDistrictSelected, setIsDistrictSelected] = useState(false)
@@ -47,7 +47,10 @@ export default function Register() {
 
   const history = useHistory();
 
+  const role = props.location.state.role
+
   const onSubmit = data => {
+    console.log(data)
     axios.post('/api/register', data)
     .then((response) => {
       if(response.data.errors) {
@@ -87,7 +90,6 @@ export default function Register() {
   const sexChangeHandler = (e) => {
     setSex(e.target.value)
   }
-
 
   return (
 
@@ -250,6 +252,10 @@ export default function Register() {
             className={classnames({'is-invalid': errors.password, 
             'is-valid': watchAllFields.password && !errors.password})} />
             <FormFeedback>{errors.password?.message}</FormFeedback>
+          </FormGroup>
+
+          <FormGroup>
+            <Input type="hidden" name="role" value={role} innerRef={register} />
           </FormGroup>
           
           <Button>Register</Button>

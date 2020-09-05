@@ -29,7 +29,7 @@ const Navbar = (props) => {
       <>
         <Nav className="navbar-nav ml-auto" navbar>
           <NavItem>
-            <NavLink to="/register" className="nav-link">Register</NavLink>
+            <NavLink to="/role" className="nav-link">Register</NavLink>
           </NavItem>
           <NavItem>
             <NavLink to="/login" className="nav-link">Login</NavLink>

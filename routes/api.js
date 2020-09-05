@@ -81,7 +81,8 @@ router.post('/register', [
     village: req.body.village,
     block: req.body.block,
     district: req.body.district,
-    state: req.body.state}), req.body.password, function(err) {
+    state: req.body.state,
+    role: req.body.role}), req.body.password, function(err) {
       if (err) {
         console.log(err);
         return res.send({exists: true});
