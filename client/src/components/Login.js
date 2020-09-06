@@ -50,7 +50,10 @@ export default function Login() {
     <div className="outer">
       {
         isAuthenticated
-        ? <p className="loginForm">You are already logged in. Please logout to login as a different user.</p>
+        ?
+        <Alert variant="danger">
+          You are already logged in. Please logout to login as a different user.
+        </Alert>
         :
         <form className="loginForm" onSubmit={handleSubmit(onSubmit)}>
           

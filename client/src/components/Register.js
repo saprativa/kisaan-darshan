@@ -96,7 +96,10 @@ export default function Register(props) {
 
       {
         isAuthenticated
-        ? <p className="loginForm">You must be logged out to register another user.</p>
+        ?
+        <Alert color="danger">
+          You must be logged out to register another user.
+        </Alert>
         :
         <form className="registrationForm mb-5 mt-5" onSubmit={handleSubmit(onSubmit)}>
 
