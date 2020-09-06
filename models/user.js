@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
-const farmerSchema = new Schema({
+const userSchema = new Schema({
     firstName: {
         type: String,
         uppercase: true,
@@ -50,5 +50,5 @@ const farmerSchema = new Schema({
     }
 });
 
-farmerSchema.plugin(passportLocalMongoose, {usernameField: 'mobile'});
-const Farmer = module.exports = mongoose.model('Farmer', farmerSchema);
+userSchema.plugin(passportLocalMongoose, {usernameField: 'mobile'});
+const User = module.exports = mongoose.model('User', userSchema);

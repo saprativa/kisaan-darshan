@@ -50,7 +50,6 @@ export default function Register(props) {
   const role = props.location.state.role
 
   const onSubmit = data => {
-    console.log(data)
     axios.post('/api/register', data)
     .then((response) => {
       if(response.data.errors) {

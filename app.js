@@ -3,7 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
-const Farmer = require('./models/farmer');
+const User = require('./models/user');
 const mongoose = require('mongoose');
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
@@ -34,7 +34,7 @@ opts.jwtFromRequest = cookieExtractor;
 opts.secretOrKey = 'jai_jawan_jai_kisaan';
 
 passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-  Farmer.findOne({_id: jwt_payload._id}, function(err, user) {
+  User.findOne({_id: jwt_payload._id}, function(err, user) {
     if (err) {
       return done(err, false);
     }
@@ -51,7 +51,7 @@ passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
 // method from passport-local-mongoose
 // it is a shortcut for custom username field
 // implements the passport local strategy
-passport.use(Farmer.createStrategy());
+passport.use(User.createStrategy());
 
 
 // following came with express-generator

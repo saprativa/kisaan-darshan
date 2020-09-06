@@ -2,33 +2,13 @@ var express = require('express')
 var router = express.Router()
 var passport = require('passport')
 var jwt = require('jsonwebtoken')
-var Farmer = require('../models/farmer')
+var User = require('../models/user')
 const { body, validationResult } = require('express-validator');
+
 
 // GET USER DETAILS
 router.get('/auth', passport.authenticate('jwt', { session: false }), function(req, res, next) {
   res.status(200).json(req.user)
-})
-
-
-// SET USER ROLE
-router.post('/role', passport.authenticate('jwt', { session: false }), function(req, res, next) {
-  Farmer.findById(req.user._id, (err, farmer) => {
-    if(!farmer) {
-      res.send("Not found")
-    } else if(err) {
-      res.send(err)
-    } else {
-      farmer.role = req.body.role
-      farmer.save()
-      .then(farmer => {
-        res.send(farmer)
-      })
-      .catch(err => {
-        res.send(err)
-      })
-    }
-  })
 })
 
 
@@ -37,6 +17,7 @@ router.get('/logout', passport.authenticate('jwt', { session: false }), (req, re
   res.clearCookie('token')
   res.json({success: true})
 })
+
 
 // LOGIN
 router.post('/login',
@@ -51,6 +32,7 @@ router.post('/login',
     })
   }
 )
+
 
 // REGISTER
 router.post('/register', [
@@ -71,7 +53,7 @@ router.post('/register', [
     console.log(errors)
     return res.send({errors: errors.array()})
   }
-  Farmer.register(new Farmer({
+  User.register(new User({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     age: req.body.age,
@@ -87,7 +69,7 @@ router.post('/register', [
         console.log(err);
         return res.send({exists: true});
       }
-      console.log('Farmer registered!');
+      console.log('User registered!');
       return res.send({success: true});
   });
 });
