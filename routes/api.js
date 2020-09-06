@@ -27,8 +27,7 @@ router.post('/login',
     res.cookie("token", token, { httpOnly: true, sameSite: true })
     return res.status(200).json({
       success: true, 
-      user: req.user.firstName + " " + req.user.lastName,
-      profile: req.user
+      user: req.user
     })
   }
 )

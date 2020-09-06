@@ -7,7 +7,6 @@ const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const [profile, setProfile] = useState(null)
 
     useEffect(() => {
         axios.get('/api/auth')
@@ -15,8 +14,7 @@ const AuthContextProvider = ({ children }) => {
             if(response.status !== 401) {
                 setIsLoading(true)
                 setIsAuthenticated(true)
-                setUser(response.data.firstName + " " + response.data.lastName)
-                setProfile(response.data)
+                setUser(response.data)
             }
         })
         .catch((error) => {
@@ -26,8 +24,8 @@ const AuthContextProvider = ({ children }) => {
 
     return(
         <div>
-            {!isLoading? <h1>Loading</h1> :
-                <AuthContext.Provider value={{user, setUser, isAuthenticated, setIsAuthenticated, profile, setProfile}}>
+            {!isLoading? <h1>Loading...</h1> :
+                <AuthContext.Provider value={{user, setUser, isAuthenticated, setIsAuthenticated}}>
                     { children }
                 </AuthContext.Provider>
             }

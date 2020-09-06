@@ -24,7 +24,7 @@ export default function Login() {
 
   const watchAllFields = watch();
 
-  const {isAuthenticated, setIsAuthenticated, setUser, setProfile} = useContext(AuthContext)
+  const {isAuthenticated, setIsAuthenticated, setUser} = useContext(AuthContext)
 
   const history = useHistory()
 
@@ -36,7 +36,6 @@ export default function Login() {
       if (response.data.success) {
         setIsAuthenticated(true)
         setUser(response.data.user)
-        setProfile(response.data.profile)
         history.push("/dashboard")
       } 
     })

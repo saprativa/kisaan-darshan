@@ -20,9 +20,9 @@ const Navbar = (props) => {
 
   const history = useHistory()
 
-  const {isAuthenticated, user, setIsAuthenticated, setUser} = useContext(AuthContext)
+  const {isAuthenticated, setIsAuthenticated, user, setUser} = useContext(AuthContext)
 
-  const toggle = () => setIsOpen(!isOpen);
+  const toggle = () => setIsOpen(!isOpen)
 
   const unAuthenticatedNavbar = ()=> {
     return (
@@ -51,7 +51,7 @@ const Navbar = (props) => {
           </NavItem>
         </Nav>
         <Nav className="navbar-nav ml-auto" navbar>
-          <NavbarText>Welcome {user} &nbsp;</NavbarText>
+          <NavbarText>Welcome {user? user.firstName + " " + user.lastName : ""} &nbsp;</NavbarText>
           <Button color="secondary" onClick={logoutHandler}>Logout</Button>
         </Nav>
       </>
