@@ -27,7 +27,7 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        default: null
+        default: ''
     },
     village: {
         type: String,
@@ -46,7 +46,8 @@ const userSchema = new Schema({
         required: true
     },
     role: {
-        type: String
+        type: String,
+        default: ''
     }
 });
 

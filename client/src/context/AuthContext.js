@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react'
+import Spinner from 'react-bootstrap/Spinner'
 import axios from 'axios'
 
 const AuthContext = createContext()
@@ -24,7 +25,9 @@ const AuthContextProvider = ({ children }) => {
 
     return(
         <div>
-            {!isLoading? <h1>Loading...</h1> :
+            {!isLoading? 
+                <Spinner animation="border" variant="success" className="centered" />
+                :
                 <AuthContext.Provider value={{user, setUser, isAuthenticated, setIsAuthenticated}}>
                     { children }
                 </AuthContext.Provider>
