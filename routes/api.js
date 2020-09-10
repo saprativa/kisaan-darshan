@@ -3,8 +3,21 @@ var router = express.Router()
 var passport = require('passport')
 var jwt = require('jsonwebtoken')
 var User = require('../models/user')
+var Crop = require('../models/crop')
 const { body, validationResult } = require('express-validator');
 
+
+// ADD CROP
+router.post('/crop', passport.authenticate('jwt', { session: false }), function(req, res, next) {
+  req.body.user = req.user._id
+  const crop = new Crop(req.body)
+  crop.save(err => {
+    if(err)
+      console.log(err)
+    else
+      console.log('Crop Added Successfully.')
+  })
+})
 
 // GET USER DETAILS
 router.get('/auth', passport.authenticate('jwt', { session: false }), function(req, res, next) {

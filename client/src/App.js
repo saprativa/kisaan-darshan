@@ -9,6 +9,7 @@ import PrivateRoute from './hocs/PrivateRoute'
 import Dashboard from './components/Dashboard'
 import Profile from './components/Profile'
 import Role from './components/Role'
+import Crops from './components/farmer/Crops'
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/role" component={Role} exact />
         <PrivateRoute path="/dashboard" component={Dashboard} exact />
         <PrivateRoute path="/profile" component={Profile} exact />
+        <PrivateRoute path="/crops" component={Crops} exact />
         <Route component={Error} />
       </Switch>
     </div>
