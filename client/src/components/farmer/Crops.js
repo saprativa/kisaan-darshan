@@ -13,7 +13,13 @@ import CardDeck from 'react-bootstrap/CardDeck'
 
 const schema = yup.object().shape({
   name: yup.string().required("Please enter Crop Name."),
-  rate: yup.string().required("Please enter Rate.")
+  date: yup.string().required("Please enter Date."),
+  area: yup.string().required("Please enter Area."),
+  unit: yup.string().required("Please enter Unit."),
+  sell: yup.string().required("Please enter Sell."),
+  buy: yup.string().required("Please enter Buy."),
+  rate: yup.string().required("Please enter Rate."),
+  variety: yup.string().required("Please enter Variety."),
 })
 
 export default function Crops() {
@@ -78,10 +84,17 @@ export default function Crops() {
           crops.map(crop => {
             return(
               <Card style={{ minWidth: '18rem', maxWidth: '18rem' }} className="mb-3">
+                <Card.Img variant="top" src="./images/crops/na.png" />
                 <Card.Body>
                   <Card.Title>{crop.name}</Card.Title>
                   <Card.Text>
-                    {crop.rate}
+                    Date of sowing: {crop.date} <br />
+                    Area: {crop.area} <br />
+                    Unit: {crop.unit} <br />
+                    Sell: {crop.sell} <br />
+                    Buy: {crop.buy} <br />
+                    Rate: {crop.rate} <br />
+                    Variety: {crop.variety} <br />
                   </Card.Text>
                   <Button variant="success">Edit</Button>
                 </Card.Body>
@@ -117,10 +130,52 @@ export default function Crops() {
                 </FormGroup>
 
                 <FormGroup>
+                    <Input type="text" name="date" placeholder="Date of sowing" innerRef={register} 
+                    className={classnames({'is-invalid': errors.date, 
+                    'is-valid': watchAllFields.date && !errors.date})} />
+                    <FormFeedback>{errors.date?.message}</FormFeedback>
+                </FormGroup>
+
+                <FormGroup>
+                    <Input type="text" name="area" placeholder="Area in which sown" innerRef={register} 
+                    className={classnames({'is-invalid': errors.area, 
+                    'is-valid': watchAllFields.area && !errors.area})} />
+                    <FormFeedback>{errors.area?.message}</FormFeedback>
+                </FormGroup>
+
+                <FormGroup>
+                    <Input type="text" name="unit" placeholder="Unit" innerRef={register} 
+                    className={classnames({'is-invalid': errors.unit, 
+                    'is-valid': watchAllFields.unit && !errors.unit})} />
+                    <FormFeedback>{errors.unit?.message}</FormFeedback>
+                </FormGroup>
+
+                <FormGroup>
+                    <Input type="text" name="sell" placeholder="Sell" innerRef={register} 
+                    className={classnames({'is-invalid': errors.sell, 
+                    'is-valid': watchAllFields.sell && !errors.sell})} />
+                    <FormFeedback>{errors.sell?.message}</FormFeedback>
+                </FormGroup>
+
+                <FormGroup>
+                    <Input type="text" name="buy" placeholder="Buy" innerRef={register} 
+                    className={classnames({'is-invalid': errors.buy, 
+                    'is-valid': watchAllFields.buy && !errors.buy})} />
+                    <FormFeedback>{errors.buy?.message}</FormFeedback>
+                </FormGroup>
+
+                <FormGroup>
                     <Input type="text" name="rate" placeholder="Rate" innerRef={register} 
                     className={classnames({'is-invalid': errors.rate, 
                     'is-valid': watchAllFields.rate && !errors.rate})} />
                     <FormFeedback>{errors.rate?.message}</FormFeedback>
+                </FormGroup>
+
+                <FormGroup>
+                    <Input type="text" name="variety" placeholder="Variety" innerRef={register} 
+                    className={classnames({'is-invalid': errors.variety, 
+                    'is-valid': watchAllFields.variety && !errors.variety})} />
+                    <FormFeedback>{errors.variety?.message}</FormFeedback>
                 </FormGroup>
 
               </form>

@@ -6,8 +6,32 @@ const cropSchema = new Schema({
         type: String,
         required: true
     },
+    date: {
+        type: String,
+        required: true
+    },
+    area: {
+        type: String,
+        required: true
+    },
+    unit: {
+        type: String,
+        required: true
+    },
+    sell: {
+        type: String,
+        required: true
+    },
+    buy: {
+        type: String,
+        required: true
+    },
     rate: {
         type: Number,
+        required: true
+    },
+    variety: {
+        type: String,
         required: true
     },
     user: {
