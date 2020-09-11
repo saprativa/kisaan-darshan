@@ -13,11 +13,23 @@ router.post('/crop', passport.authenticate('jwt', { session: false }), function(
   const crop = new Crop(req.body)
   crop.save(err => {
     if(err)
-      console.log(err)
+      res.status(500).json(err)
     else
-      console.log('Crop Added Successfully.')
+      res.status(200).json({success: true})
   })
 })
+
+
+// GET CROPS
+router.get('/crops', passport.authenticate('jwt', { session: false }), function(req, res, next) {
+  Crop.find({user: req.user._id}, (err, crop) => {
+    if(err)
+      res.status(500).json(err)
+    if(crop)
+      res.status(200).json(crop)
+  })
+})
+
 
 // GET USER DETAILS
 router.get('/auth', passport.authenticate('jwt', { session: false }), function(req, res, next) {

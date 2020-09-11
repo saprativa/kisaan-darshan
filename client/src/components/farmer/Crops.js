@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers'
 import * as yup from "yup"
@@ -8,6 +8,8 @@ import Alert from 'react-bootstrap/Alert'
 import classnames from 'classnames'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+import CardDeck from 'react-bootstrap/CardDeck'
 
 const schema = yup.object().shape({
   name: yup.string().required("Please enter Crop Name."),
@@ -24,8 +26,17 @@ export default function Crops() {
   const watchAllFields = watch()
   const [showAlert, setShowAlert] = useState(false);
   const [show, setShow] = useState(false);
+  const [crops,setCrops] = useState([]);
 
-  
+  useEffect(() => {
+    axios.get('/api/crops')
+    .then((response) => {
+      setCrops(response.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }, [])
 
   const handleShow = () => {
       setShow(true);
@@ -38,7 +49,16 @@ export default function Crops() {
   const onSubmit = data => {
     axios.post('/api/crop', data)
     .then((response) => {
-      setShow(false)
+      if(response.data.success) {
+        setShow(false)
+        axios.get('/api/crops')
+        .then((response) => {
+          setCrops(response.data)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }
     })
     .catch((error) => {
       setError("server", {type: "manual", message: "Invalid Crop Data."})
@@ -48,10 +68,28 @@ export default function Crops() {
 
   return (
 
-    <div>
+    <div className="mt-5">
         <Button variant="primary" onClick={handleShow}>
                 Add Crop
         </Button>
+
+        <CardDeck className="mt-3">
+        {
+          crops.map(crop => {
+            return(
+              <Card style={{ minWidth: '18rem', maxWidth: '18rem' }} className="mb-3">
+                <Card.Body>
+                  <Card.Title>{crop.name}</Card.Title>
+                  <Card.Text>
+                    {crop.rate}
+                  </Card.Text>
+                  <Button variant="success">Edit</Button>
+                </Card.Body>
+              </Card>
+            )
+          })
+        }
+        </CardDeck>
 
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>

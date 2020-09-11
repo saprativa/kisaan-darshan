@@ -1,11 +1,14 @@
 import React from 'react'
+import { Link } from "react-router-dom"
+import Button from 'react-bootstrap/Button'
 
 function Dashboard() {
 
   return (
-    <div>
-      <h1>This is the Dashboard. Work in progress.</h1>
-      <p>In the meantime you can visit your profile.</p>
+    <div className="mt-5">
+      <Link to="/crops">
+        <Button variant="primary">Crops</Button>
+      </Link>
     </div>
   )
 }
